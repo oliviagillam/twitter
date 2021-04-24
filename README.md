@@ -25,5 +25,5 @@ Here's a walkthrough of implemented user stories:
 
 Note: Will add once I fix whatever it is that I broke
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/oliviagillam/twitter/blob/master/ezgif-3-4ee602df8147.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
