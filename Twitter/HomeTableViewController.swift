@@ -20,11 +20,11 @@ class HomeTableViewController: UITableViewController {
     
     @objc func loadTweet(){
         let myURL = "https://api.twitter.com/1.1/statuses/home_timeline.json"
-        numTweets = 20
-        let myParams = ["counts":numTweets]
+        numTweets = 10
+        let myParams = ["count":numTweets]
         
         TwitterAPICaller.client?.getDictionariesRequest(url: myURL, parameters: myParams, success: { (tweets: [NSDictionary]) in
-            self.tweetArray.removeAll()
+            //self.tweetArray.removeAll()
             for tweet in tweets{
                 self.tweetArray.append(tweet)
             }
@@ -33,15 +33,16 @@ class HomeTableViewController: UITableViewController {
             
         }, failure: { (Error) in
             print("could not retrieve tweets")
+            print(Error.localizedDescription)
         })
     }
     
-    @objc func loadMoreTweets(){
+    func loadMoreTweets(){
         let myURL = "https://api.twitter.com/1.1/statuses/home_timeline.json"
         numTweets = numTweets + 20
-        let myParams = ["counts":numTweets]
+        let myParams = ["count":numTweets]
         TwitterAPICaller.client?.getDictionariesRequest(url: myURL, parameters: myParams, success: { (tweets: [NSDictionary]) in
-            self.tweetArray.removeAll()
+            //self.tweetArray.removeAll()
             for tweet in tweets{
                 self.tweetArray.append(tweet)
             }
