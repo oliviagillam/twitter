@@ -12,28 +12,61 @@ class HomeTableViewController: UITableViewController {
     var tweetArray = [NSDictionary]()
     var numTweets: Int!
     
-    let myURL = "https://api.twitter.com/1.1/statuses/home_timeline.json"
-    let myParams = ["counts":10]
+    let myRefreshControl = UIRefreshControl()
     
     
     
-    func loadTweet(){
+    
+    
+    @objc func loadTweet(){
+        let myURL = "https://api.twitter.com/1.1/statuses/home_timeline.json"
+        numTweets = 20
+        let myParams = ["counts":numTweets]
+        
         TwitterAPICaller.client?.getDictionariesRequest(url: myURL, parameters: myParams, success: { (tweets: [NSDictionary]) in
             self.tweetArray.removeAll()
             for tweet in tweets{
                 self.tweetArray.append(tweet)
             }
             self.tableView.reloadData()
+            self.myRefreshControl.endRefreshing()
             
         }, failure: { (Error) in
             print("could not retrieve tweets")
         })
+    }
+    
+    @objc func loadMoreTweets(){
+        let myURL = "https://api.twitter.com/1.1/statuses/home_timeline.json"
+        numTweets = numTweets + 20
+        let myParams = ["counts":numTweets]
+        TwitterAPICaller.client?.getDictionariesRequest(url: myURL, parameters: myParams, success: { (tweets: [NSDictionary]) in
+            self.tweetArray.removeAll()
+            for tweet in tweets{
+                self.tweetArray.append(tweet)
+            }
+            self.tableView.reloadData()
+            self.myRefreshControl.endRefreshing()
+            
+        }, failure: { (Error) in
+            print("could not retrieve tweets")
+        })
+     
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell,forRowAt indexPath: IndexPath){
+        if indexPath.row + 1 == tweetArray.count{
+            loadMoreTweets()
+        }
     }
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         loadTweet()
+        myRefreshControl.addTarget(self, action: #selector(loadTweet), for: .valueChanged)
+        tableView.refreshControl = myRefreshControl
+        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
