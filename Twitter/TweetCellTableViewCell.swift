@@ -85,6 +85,7 @@ class TweetCellTableViewCell: UITableViewCell {
                 favButton.setImage(UIImage(systemName: "shift.fill"), for:  UIControl.State.normal)
             } else {
                 // Fallback on earlier versions
+                print("Oopsies")
             }
         }
         else{
@@ -92,6 +93,7 @@ class TweetCellTableViewCell: UITableViewCell {
                 favButton.setImage(UIImage(systemName: "shift"), for:  UIControl.State.normal)
             } else {
                 // Fallback on earlier versions
+                print("Oopsies")
             }
         }
     }
